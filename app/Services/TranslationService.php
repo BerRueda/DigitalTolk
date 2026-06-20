@@ -19,11 +19,16 @@ class TranslationService
         return $this->translationRepo->findById($id);
     }
 
+    /**
+     * @param array<string, mixed> $filters
+     * @return LengthAwarePaginator<int, Translation>
+     */
     public function list(array $filters = [], int $perPage = 50): LengthAwarePaginator
     {
         return $this->translationRepo->getAll($filters, $perPage, ['tags']);
     }
 
+    /** @param array<string, mixed> $data */
     public function create(array $data): Translation
     {
         $translation = $this->translationRepo->create($data);
@@ -39,6 +44,7 @@ class TranslationService
         return $translation;
     }
 
+    /** @param array<string, mixed> $data */
     public function update(int $id, array $data): Translation
     {
         $translation = $this->translationRepo->findById($id);

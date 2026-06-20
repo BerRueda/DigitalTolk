@@ -99,8 +99,8 @@ Your API is now live at `http://localhost:8000/api`.
 ### 1. Clone & Install Dependencies
 
 ```bash
-git clone <your-repo-url> digitolk
-cd digitolk
+git clone https://github.com/BerRueda/DigitalTolk.git digitaltolk
+cd digitaltolk
 composer install
 ```
 
@@ -122,7 +122,7 @@ DB_CONNECTION=sqlite
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=digitolk
+DB_DATABASE=digitaltolk
 DB_USERNAME=root
 DB_PASSWORD=your_password
 ```

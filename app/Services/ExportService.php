@@ -15,6 +15,7 @@ class ExportService
         private readonly TranslationRepositoryInterface $translationRepo,
     ) {}
 
+    /** @return array<string, array<string, array{content: string, tags: string[], updated_at: string|null}>> */
     public function getExport(): array
     {
         return Cache::remember(self::CACHE_KEY, self::CACHE_TTL, fn () => $this->generate());
@@ -25,6 +26,7 @@ class ExportService
         Cache::forget(self::CACHE_KEY);
     }
 
+    /** @return array<string, array<string, array{content: string, tags: string[], updated_at: string|null}>> */
     private function generate(): array
     {
         $result = [];

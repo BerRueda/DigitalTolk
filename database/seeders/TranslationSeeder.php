@@ -18,7 +18,7 @@ class TranslationSeeder extends Seeder
 
     public function run(): void
     {
-        $this->command?->info('Generating 100,000 translations...');
+        $this->command->info('Generating 100,000 translations...');
 
         $tags = $this->createTags();
         $keys = $this->generateKeys(10_000);
@@ -28,9 +28,10 @@ class TranslationSeeder extends Seeder
 
         $this->attachTags($tags);
 
-        $this->command?->info('Done. Created '.Translation::count().' translations.');
+        $this->command->info('Done. Created '.Translation::count().' translations.');
     }
 
+    /** @return array<int, Tag> */
     private function createTags(): array
     {
         $tagNames = [
@@ -46,11 +47,12 @@ class TranslationSeeder extends Seeder
             $tags[] = Tag::create(['name' => $name]);
         }
 
-        $this->command?->info('Created '.count($tags).' tags.');
+        $this->command->info('Created '.count($tags).' tags.');
 
         return $tags;
     }
 
+    /** @return array<int, string> */
     private function generateKeys(int $count): array
     {
         $prefixes = ['app', 'auth', 'nav', 'page', 'form', 'table', 'modal', 'sidebar', 'footer', 'header'];
@@ -78,6 +80,7 @@ class TranslationSeeder extends Seeder
         return $keys;
     }
 
+    /** @return array<int, string> */
     private function generateContentPool(int $size): array
     {
         $pool = [];
@@ -89,6 +92,10 @@ class TranslationSeeder extends Seeder
         return $pool;
     }
 
+    /**
+     * @param array<int, string> $keys
+     * @param array<int, string> $contentPool
+     */
     private function insertTranslations(array $keys, array $contentPool): void
     {
         $now = now();
@@ -112,7 +119,7 @@ class TranslationSeeder extends Seeder
                     $totalInserted += count($batch);
                     $batch = [];
 
-                    $this->command?->info(
+                    $this->command->info(
                         "Inserted {$totalInserted} / ".($localeCount * $keyCount).' translations...',
                     );
                 }
@@ -125,6 +132,7 @@ class TranslationSeeder extends Seeder
         }
     }
 
+    /** @param array<int, Tag> $tags */
     private function attachTags(array $tags): void
     {
         $tagIds = array_map(fn (Tag $tag) => $tag->id, $tags);
@@ -132,7 +140,7 @@ class TranslationSeeder extends Seeder
         $batch = [];
         $pivotInserted = 0;
 
-        $this->command?->info('Attaching tags to translations...');
+        $this->command->info('Attaching tags to translations...');
 
         foreach ($translationIds as $translationId) {
             $randomTags = (array) array_rand($tagIds, rand(1, 3));
@@ -155,6 +163,6 @@ class TranslationSeeder extends Seeder
             DB::table('translation_tag')->insert($batch);
         }
 
-        $this->command?->info("Attached {$pivotInserted} tag associations.");
+        $this->command->info("Attached {$pivotInserted} tag associations.");
     }
 }

@@ -111,8 +111,8 @@ return Application::configure(basePath: dirname(__DIR__))
                     $response['exception'] = get_class($e);
                     $response['file'] = $e->getFile();
                     $response['line'] = $e->getLine();
-                    $response['trace'] = collect($e->getTrace())->take(10)->map(fn ($t) => [
-                        'function' => ($t['class'] ?? '').($t['type'] ?? '').($t['function'] ?? ''),
+                    $response['trace'] = collect($e->getTrace())->take(10)->map(fn (array $t) => [
+                        'function' => ($t['class'] ?? '').($t['type'] ?? '').$t['function'],
                         'file' => $t['file'] ?? 'unknown',
                         'line' => $t['line'] ?? 0,
                     ])->values();

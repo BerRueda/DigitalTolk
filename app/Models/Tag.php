@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Translation> $translations
  */
 #[Fillable(['name'])]
 class Tag extends Model
@@ -21,6 +22,7 @@ class Tag extends Model
     /** @use HasFactory<TagFactory> */
     use HasFactory;
 
+    /** @return BelongsToMany<Translation, $this> */
     public function translations(): BelongsToMany
     {
         return $this->belongsToMany(Translation::class, 'translation_tag');

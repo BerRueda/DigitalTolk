@@ -23,6 +23,11 @@ class TranslationRepository implements TranslationRepositoryInterface
             ->first();
     }
 
+    /**
+     * @param array<string, mixed> $filters
+     * @param array<int, string> $with
+     * @return LengthAwarePaginator<int, Translation>
+     */
     public function getAll(
         array $filters = [],
         int $perPage = 50,
@@ -53,6 +58,7 @@ class TranslationRepository implements TranslationRepositoryInterface
         return $query->latest()->paginate($perPage);
     }
 
+    /** @param array<string, mixed> $data */
     public function create(array $data): Translation
     {
         $tags = $data['tags'] ?? [];
@@ -65,6 +71,7 @@ class TranslationRepository implements TranslationRepositoryInterface
         $translation = Translation::create($data);
 
         if ($tags !== []) {
+            /** @var array<int, string> $tags */
             $tagIds = collect($tags)
                 ->map(fn (string $name) => Tag::firstOrCreate(['name' => $name])->id)
                 ->toArray();
@@ -74,6 +81,7 @@ class TranslationRepository implements TranslationRepositoryInterface
         return $translation->load('tags');
     }
 
+    /** @param array<string, mixed> $data */
     public function update(Translation $translation, array $data): Translation
     {
         $tags = $data['tags'] ?? null;
@@ -86,6 +94,7 @@ class TranslationRepository implements TranslationRepositoryInterface
         $translation->update($data);
 
         if ($tags !== null) {
+            /** @var array<int, string> $tags */
             $tagIds = collect($tags)
                 ->map(fn (string $name) => Tag::firstOrCreate(['name' => $name])->id)
                 ->toArray();
@@ -100,6 +109,7 @@ class TranslationRepository implements TranslationRepositoryInterface
         return $translation->delete();
     }
 
+    /** @return LazyCollection<int, Translation> */
     public function cursorForExport(): LazyCollection
     {
         return Translation::with('tags')->orderBy('id')->cursor();
