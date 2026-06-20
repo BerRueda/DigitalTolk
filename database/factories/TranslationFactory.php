@@ -14,10 +14,14 @@ class TranslationFactory extends Factory
 
     private const LOCALES = ['en', 'fr', 'es', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'ar'];
 
+    private static int $keyCounter = 0;
+
     public function definition(): array
     {
+        self::$keyCounter++;
+
         return [
-            'key' => fake()->word().'.'.fake()->word().'.'.fake()->word(),
+            'key' => 'test.'.self::$keyCounter.'.key',
             'locale' => fake()->randomElement(self::LOCALES),
             'content' => fake()->sentence(),
         ];
@@ -26,5 +30,10 @@ class TranslationFactory extends Factory
     public function forLocale(string $locale): static
     {
         return $this->state(fn () => ['locale' => $locale]);
+    }
+
+    public function withKey(string $key): static
+    {
+        return $this->state(fn () => ['key' => $key]);
     }
 }

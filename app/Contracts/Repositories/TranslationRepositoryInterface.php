@@ -13,8 +13,8 @@ interface TranslationRepositoryInterface
     public function findByKeyAndLocale(string $key, string $locale): ?Translation;
 
     /**
-     * @param array<string, mixed> $filters
-     * @param array<int, string> $with
+     * @param  array<string, mixed>  $filters
+     * @param  array<int, string>  $with
      * @return LengthAwarePaginator<int, Translation>
      */
     public function getAll(

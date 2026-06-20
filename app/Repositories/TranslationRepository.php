@@ -24,8 +24,8 @@ class TranslationRepository implements TranslationRepositoryInterface
     }
 
     /**
-     * @param array<string, mixed> $filters
-     * @param array<int, string> $with
+     * @param  array<string, mixed>  $filters
+     * @param  array<int, string>  $with
      * @return LengthAwarePaginator<int, Translation>
      */
     public function getAll(

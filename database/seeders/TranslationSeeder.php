@@ -93,8 +93,8 @@ class TranslationSeeder extends Seeder
     }
 
     /**
-     * @param array<int, string> $keys
-     * @param array<int, string> $contentPool
+     * @param  array<int, string>  $keys
+     * @param  array<int, string>  $contentPool
      */
     private function insertTranslations(array $keys, array $contentPool): void
     {

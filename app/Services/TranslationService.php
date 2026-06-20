@@ -20,7 +20,7 @@ class TranslationService
     }
 
     /**
-     * @param array<string, mixed> $filters
+     * @param  array<string, mixed>  $filters
      * @return LengthAwarePaginator<int, Translation>
      */
     public function list(array $filters = [], int $perPage = 50): LengthAwarePaginator
