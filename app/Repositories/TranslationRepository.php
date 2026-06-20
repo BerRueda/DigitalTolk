@@ -112,6 +112,9 @@ class TranslationRepository implements TranslationRepositoryInterface
     /** @return LazyCollection<int, Translation> */
     public function cursorForExport(): LazyCollection
     {
-        return Translation::with('tags')->orderBy('id')->cursor();
+        return Translation::select(['id', 'locale', 'key', 'content', 'updated_at'])
+            ->with('tags')
+            ->orderBy('id')
+            ->cursor();
     }
 }

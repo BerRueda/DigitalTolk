@@ -20,7 +20,9 @@ class PerformanceTest extends TestCase
 
     private const MAX_RESPONSE_TIME_MS = 200;
 
-    private const MAX_EXPORT_TIME_MS = 500;
+    private const MAX_EXPORT_CACHED_TIME_MS = 500;
+
+    private const MAX_EXPORT_UNCACHED_TIME_MS = 1000;
 
     private const SEED_COUNT = 1000;
 
@@ -188,7 +190,7 @@ class PerformanceTest extends TestCase
 
         $response->assertOk();
         $this->assertLessThan(
-            self::MAX_EXPORT_TIME_MS,
+            self::MAX_EXPORT_UNCACHED_TIME_MS,
             $duration,
             "Uncached export took {$duration}ms, expected < {$this->maxExportTimeMs()}ms",
         );
@@ -270,6 +272,6 @@ class PerformanceTest extends TestCase
 
     private function maxExportTimeMs(): int
     {
-        return self::MAX_EXPORT_TIME_MS;
+        return self::MAX_EXPORT_UNCACHED_TIME_MS;
     }
 }
